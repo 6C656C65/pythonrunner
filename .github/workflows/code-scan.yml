@@ -29,6 +29,6 @@ jobs:
       - name: Lint with flake8
         run: flake8 pythonrunner
       - name: Check with black
-        run: black --check cortexutils/ tests/ setup.py
+        run: black --check pythonrunner
       - name: Check with bandit
         run: bandit -r pythonrunner
