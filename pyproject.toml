@@ -1,5 +1,5 @@
 [project]
-name = "pythonrunner"
+name = "pyrunx"
 description = "Simple project that allows you to run python scripts "
 readme = "README.md"
 license = "MIT"

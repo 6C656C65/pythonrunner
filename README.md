@@ -34,7 +34,7 @@ pip install -r requirements.txt
 ### Install from package
 
 ```bash
-pip install pythonrunner
+pip install pyrunx
 ```
 
 ## ⚙️ **Configuration**
