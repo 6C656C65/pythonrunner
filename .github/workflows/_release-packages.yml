@@ -1,10 +1,7 @@
 name: release-packages
 
 on:
-  workflow_run:
-    workflows: ["build-packages"]
-    types:
-      - completed
+  workflow_call:
 
 jobs:
   release-packages:
