@@ -20,6 +20,15 @@ jobs:
           version=$(grep '^__version__' pythonrunner/__init__.py | cut -d'"' -f2)
           echo "version=$version" >> $GITHUB_OUTPUT
 
+      - name: Install Ruby and github_changelog_generator
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ruby ruby-dev
+          gem install github_changelog_generator
+
+      - name: Generate changelog
+        run: github_changelog_generator --token ${{ secrets.GITHUB_TOKEN }} --user 6C656C65 --project pythonrunner
+
       - name: Create Tag
         run: |
           git config user.name "github-actions[bot]"
