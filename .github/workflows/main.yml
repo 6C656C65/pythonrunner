@@ -1,0 +1,20 @@
+name: cicd
+on: 
+  push:
+    branches:
+      - main
+    tags:
+      - "*"
+  pull_request:
+
+jobs:
+  code-scan:
+    uses: ./.github/workflows/_code-scan.yml
+
+  build-package:
+    if: github.event_name == 'push'
+    uses: ./.github/workflows/_build-package.yml
+
+  release-package:
+    if: github.event_name == 'push'
+    uses: ./.github/workflows/_release-package.yml
