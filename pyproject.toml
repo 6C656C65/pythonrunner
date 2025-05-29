@@ -33,6 +33,9 @@ find = {}
 [tool.setuptools.dynamic]
 dependencies = { file = "requirements.txt" }
 
+[tool.setuptools]
+license-files = ["LICENSE"]
+
 [project.scripts]
 pythonrunner = "pythonrunner.pythonrunner:main"
 
