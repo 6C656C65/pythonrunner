@@ -2,7 +2,7 @@
 name = "pythonrunner"
 description = "Simple project that allows you to run python scripts "
 readme = "README.md"
-license = {text = "MIT"}
+license = { file = "LICENSE" }
 authors = [{name = "6C656C65"}]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -32,9 +32,6 @@ find = {}
 
 [tool.setuptools.dynamic]
 dependencies = { file = "requirements.txt" }
-
-[tool.setuptools]
-license-files = ["LICENSE"]
 
 [project.scripts]
 pythonrunner = "pythonrunner.pythonrunner:main"
