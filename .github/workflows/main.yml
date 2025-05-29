@@ -13,8 +13,8 @@ jobs:
 
   build-package:
     if: github.event_name == 'push'
-    uses: ./.github/workflows/_build-package.yml
+    uses: ./.github/workflows/_build-packages.yml
 
   release-package:
     if: github.event_name == 'push'
-    uses: ./.github/workflows/_release-package.yml
+    uses: ./.github/workflows/_release-packages.yml
