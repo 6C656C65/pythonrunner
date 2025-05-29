@@ -18,3 +18,5 @@ jobs:
   release-package:
     if: github.event_name == 'push'
     uses: ./.github/workflows/_release-packages.yml
+    permissions:
+      contents: write
