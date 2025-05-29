@@ -1,5 +1,9 @@
 # Changelog
 
+## [v0.1.11](https://github.com/6C656C65/pythonrunner/tree/v0.1.11) (2025-05-29)
+
+[Full Changelog](https://github.com/6C656C65/pythonrunner/compare/v0.1.10...v0.1.11)
+
 ## [v0.1.10](https://github.com/6C656C65/pythonrunner/tree/v0.1.10) (2025-05-29)
 
 [Full Changelog](https://github.com/6C656C65/pythonrunner/compare/f287e8044c0160b0eb75acd430bdc8044cc9bca2...v0.1.10)
