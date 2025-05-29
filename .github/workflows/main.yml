@@ -1,4 +1,5 @@
 name: cicd
+
 on: 
   push:
     branches:
@@ -9,17 +10,115 @@ on:
 
 jobs:
   code-scan:
-    uses: ./.github/workflows/_code-scan.yml
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
 
-  build-package:
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: pip install --no-cache-dir -U pip black flake8 bandit
+
+      - name: Lint with flake8
+        run: flake8 pythonrunner
+
+      - name: Check with black
+        run: black --check pythonrunner
+
+      - name: Check with bandit
+        run: bandit -r pythonrunner
+
+  build-packages:
     needs: code-scan
     if: github.event_name == 'push'
-    uses: ./.github/workflows/_build-packages.yml
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
-  release-package:
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.13
+
+      - name: Install build dependencies
+        run: pip install --no-cache-dir -U pip . build
+
+      - name: Build package
+        run: python -m build --sdist --wheel
+      - name: Upload built distributions
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+  release-packages:
     needs: build-package
     if: github.event_name == 'push'
-    uses: ./.github/workflows/_release-packages.yml
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get version from file
+        id: get_version
+        run: |
+          version=$(grep '^__version__' pythonrunner/__init__.py | cut -d'"' -f2)
+          echo "version=$version" >> $GITHUB_OUTPUT
+
+      - name: Generate CHANGELOG
+        uses: tj-actions/github-changelog-generator@v1.15
+
+      - name: Commit CHANGELOG.md
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add CHANGELOG.md
+          git commit -m "chore: update CHANGELOG for v${{ steps.get_version.outputs.version }}" || echo "No changes to commit"
+          git push origin HEAD
+
+      - name: Create Tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag v${{ steps.get_version.outputs.version }}
+          git push origin v${{ steps.get_version.outputs.version }}
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: v${{ steps.get_version.outputs.version }}
+          release_name: Release v${{ steps.get_version.outputs.version }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download built distributions
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Install release dependencies
+        run: pip install --no-cache-dir -U pip . twine packaging
+
+      - name: Upload to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
