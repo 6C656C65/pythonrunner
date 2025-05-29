@@ -12,10 +12,12 @@ jobs:
     uses: ./.github/workflows/_code-scan.yml
 
   build-package:
+    needs: code-scan
     if: github.event_name == 'push'
     uses: ./.github/workflows/_build-packages.yml
 
   release-package:
+    needs: build-package
     if: github.event_name == 'push'
     uses: ./.github/workflows/_release-packages.yml
     permissions:
