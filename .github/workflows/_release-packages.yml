@@ -30,6 +30,9 @@ jobs:
       - name: Generate CHANGELOG
         uses: tj-actions/github-changelog-generator@v1.15
 
+      - name: Show generated changelog
+        run: cat CHANGELOG.md
+
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
