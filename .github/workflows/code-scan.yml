@@ -1,7 +1,12 @@
 name: code-scan
 
-on:
-  workflow_call:
+on: 
+  push:
+    branches:
+      - main
+    tags:
+      - "*"
+  pull_request:
 
 jobs:
   code-scan:

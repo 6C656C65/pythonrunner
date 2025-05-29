@@ -11,12 +11,12 @@
   <br>
   <img src="https://img.shields.io/github/forks/6C656C65/pythonrunner?style=for-the-badge">
   <img src="https://img.shields.io/github/stars/6C656C65/pythonrunner?style=for-the-badge">
-  <img src="https://img.shields.io/github/commit-activity/w/6C656C65/pyppythonrunnerroxy?style=for-the-badge">
+  <img src="https://img.shields.io/github/commit-activity/w/6C656C65/pythonrunner?style=for-the-badge">
   <img src="https://img.shields.io/github/contributors/6C656C65/pythonrunner?style=for-the-badge">
   <br>
   <img src="https://img.shields.io/github/actions/workflow/status/6C656C65/pythonrunner/code-scan.yml?label=Scan&style=for-the-badge">
   <img src="https://img.shields.io/github/actions/workflow/status/6C656C65/pythonrunner/build-packages.yml?label=Build&style=for-the-badge">
-  <img src="https://img.shields.io/github/actions/workflow/status/6C656C65/pythonrunner/upload-packages.yml?label=Delivery&style=for-the-badge">
+  <img src="https://img.shields.io/github/actions/workflow/status/6C656C65/pythonrunner/release-packages.yml?label=Release&style=for-the-badge">
 </p>
 
 ---

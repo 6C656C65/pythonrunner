@@ -1,7 +1,11 @@
 name: build-packages
 
-on:
-  workflow_call:
+on: 
+  push:
+    branches:
+      - main
+    tags:
+      - "*"
 
 jobs:
   build-packages:
