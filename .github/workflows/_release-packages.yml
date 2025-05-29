@@ -24,7 +24,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y ruby ruby-dev
-          gem install github_changelog_generator
+          sudo gem install github_changelog_generator
 
       - name: Generate changelog
         run: github_changelog_generator --token ${{ secrets.GITHUB_TOKEN }} --user 6C656C65 --project pythonrunner
