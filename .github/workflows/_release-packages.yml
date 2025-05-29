@@ -20,15 +20,15 @@ jobs:
           version=$(grep '^__version__' pythonrunner/__init__.py | cut -d'"' -f2)
           echo "version=$version" >> $GITHUB_OUTPUT
 
-      - name: Generate CHANGELOG
-        uses: tj-actions/github-changelog-generator@v1.15
-
       - name: Create Tag
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git tag v${{ steps.get_version.outputs.version }}
           git push origin v${{ steps.get_version.outputs.version }}
+
+      - name: Generate CHANGELOG
+        uses: tj-actions/github-changelog-generator@v1.15
 
       - name: Create GitHub Release
         id: create_release
