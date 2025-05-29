@@ -113,6 +113,6 @@ def main():
     load_extensions(args.extensions, config)
     try:
         while True:
-            time.sleep(1)
+            time.sleep(2)
     except KeyboardInterrupt:
         logger.info("Manual stop (Ctrl+C)")
