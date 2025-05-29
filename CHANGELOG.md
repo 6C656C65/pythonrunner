@@ -1,16 +1,8 @@
 # Changelog
 
-## [v0.1.5](https://github.com/6C656C65/pythonrunner/tree/v0.1.5) (2025-05-29)
+## [v0.1.6](https://github.com/6C656C65/pythonrunner/tree/v0.1.6) (2025-05-29)
 
-[Full Changelog](https://github.com/6C656C65/pythonrunner/compare/v0.1.4...v0.1.5)
-
-## [v0.1.4](https://github.com/6C656C65/pythonrunner/tree/v0.1.4) (2025-05-29)
-
-[Full Changelog](https://github.com/6C656C65/pythonrunner/compare/v0.1.3...v0.1.4)
-
-## [v0.1.3](https://github.com/6C656C65/pythonrunner/tree/v0.1.3) (2025-05-29)
-
-[Full Changelog](https://github.com/6C656C65/pythonrunner/compare/f287e8044c0160b0eb75acd430bdc8044cc9bca2...v0.1.3)
+[Full Changelog](https://github.com/6C656C65/pythonrunner/compare/f287e8044c0160b0eb75acd430bdc8044cc9bca2...v0.1.6)
 
 
 
