@@ -64,7 +64,7 @@ jobs:
           path: dist
 
   release-packages:
-    needs: build-package
+    needs: build-packages
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
