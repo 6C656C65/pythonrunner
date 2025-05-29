@@ -56,7 +56,7 @@ jobs:
           path: dist
 
       - name: Install release dependencies
-        run: pip install --no-cache-dir -U pip . twine
+        run: pip install --no-cache-dir -U pip . twine packaging
 
       - name: Upload to PyPI
         run: twine upload dist/*

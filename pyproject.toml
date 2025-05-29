@@ -2,11 +2,13 @@
 name = "pythonrunner"
 description = "Simple project that allows you to run python scripts "
 readme = "README.md"
-license = { file = "LICENSE" }
+license = "MIT"
+license-files = [
+    "LICENSE",
+]
 authors = [{name = "6C656C65"}]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
-    "License :: OSI Approved :: MIT License",
     "Intended Audience :: Developers",
     "Natural Language :: English",
     "Operating System :: OS Independent",
