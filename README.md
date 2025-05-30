@@ -43,11 +43,24 @@ Alternatively, you can use the `-c` or `--config` argument for the path to the f
 The file simply contains the variables that will be used in the extensions. Here is an example file:
 
 ```yml
-webhook_url: "https://discord.com/api/webhooks/XXXXXXXXXXXXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXX"
-discord_token: "XXXXXXXXXXXXXXXXXXXXXXXXXX.XXXXXX.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-discord_prefix: "!"
-url: "https://example.com"
-interval: 60
+crtsh:
+  discord_token: "XXXXXXXXXXXXXXXXXXXXXXXXXX.XXXXXX.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+  discord_prefix: "!"
+
+dns:
+  discord_token: "XXXXXXXXXXXXXXXXXXXXXXXXXX.XXXXXX.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+  discord_prefix: "!"
+
+rootme:
+  discord_token: "XXXXXXXXXXXXXXXXXXXXXXXXXX.XXXXXX.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+  discord_prefix: "!"
+  api_key: XXXXXX_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  users_uid:
+    - uid: 000000
+      pseudo: user1
+    - uid: 111111
+      pseudo: user2
+...
 ```
 
 ## 🧩 **Extensions**
@@ -55,6 +68,7 @@ interval: 60
 Pythonrunner will launch the python files located in the `extensions` folder. The python files can be in subfolders of this folder.
 You can use the `-e` or `--extensions` argument to change the path of the folder to read.
 Extensions are available on [this repository](https://github.com/6C656C65/pythonrunner-extensions).
+Each of these extensions offers a configuration file. You can add the configurations to your file.
 
 ## 📚 **Documentation**
 
