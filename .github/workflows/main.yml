@@ -82,17 +82,6 @@ jobs:
           version=$(grep '^__version__' pythonrunner/__init__.py | cut -d'"' -f2)
           echo "version=$version" >> $GITHUB_OUTPUT
 
-      - name: Generate CHANGELOG
-        uses: tj-actions/github-changelog-generator@v1.15
-
-      - name: Commit CHANGELOG.md
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add CHANGELOG.md
-          git commit -m "chore: update CHANGELOG for v${{ steps.get_version.outputs.version }}" || echo "No changes to commit"
-          git push origin HEAD
-
       - name: Create Tag
         run: |
           git config user.name "github-actions[bot]"
