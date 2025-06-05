@@ -1,4 +1,5 @@
 import os
+import threading
 import importlib
 import argparse
 import logging
@@ -52,7 +53,7 @@ def load_extensions(extensions_dir: str, shared_config: dict):
                             instance = obj(config=shared_config)
                             logger.info(f"Starting extension: {module_name}")
                             try:
-                                instance.run()
+                                threading.Thread(target=instance.run, daemon=True).start()
                             except Exception as e:
                                 logger.error(
                                     f"Extension '{module_name}' crashed during run: {e}"
