@@ -67,6 +67,14 @@ rootme:
 
 Pythonrunner will launch the python files located in the `extensions` folder. The python files can be in subfolders of this folder.
 You can use the `-e` or `--extensions` argument to change the path of the folder to read.
+
+You can also use the `--only` argument to specify a comma-separated list of extension filenames (without `.py`) to load exclusively.
+Example:
+```bash
+pythonrunner --only dns,crtsh
+```
+This will only load the dns.py and crtsh.py extensions.
+
 Extensions are available on [this repository](https://github.com/6C656C65/pythonrunner-extensions).
 Each of these extensions offers a configuration file. You can add the configurations to your file.
 

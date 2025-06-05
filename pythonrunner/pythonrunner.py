@@ -30,40 +30,45 @@ logger.addHandler(handler)
 logger.setLevel(logging.INFO)
 
 
-def load_extensions(extensions_dir: str, shared_config: dict):
+def load_extensions(extensions_dir: str, shared_config: dict, only: list[str] = None):
     if not os.path.isdir(extensions_dir):
         logger.error(f"The extensions directory '{extensions_dir}' does not exist.")
         return
 
     for root, _, files in os.walk(extensions_dir):
         for filename in files:
-            if filename.endswith(".py") and not filename.startswith("__"):
-                filepath = os.path.join(root, filename)
+            if not filename.endswith(".py") or filename.startswith("__"):
+                continue
 
-                relative_path = os.path.relpath(filepath, extensions_dir)
-                module_name = os.path.splitext(relative_path)[0].replace(os.sep, ".")
+            name_without_ext = os.path.splitext(filename)[0]
+            if only and name_without_ext not in only:
+                continue
 
-                try:
-                    spec = importlib.util.spec_from_file_location(module_name, filepath)
-                    module = importlib.util.module_from_spec(spec)
-                    spec.loader.exec_module(module)
+            filepath = os.path.join(root, filename)
+            relative_path = os.path.relpath(filepath, extensions_dir)
+            module_name = os.path.splitext(relative_path)[0].replace(os.sep, ".")
 
-                    for _, obj in inspect.getmembers(module, inspect.isclass):
-                        if issubclass(obj, Worker) and obj is not Worker:
-                            instance = obj(config=shared_config)
-                            logger.info(f"Starting extension: {module_name}")
-                            try:
-                                threading.Thread(target=instance.run, daemon=True).start()
-                            except Exception as e:
-                                logger.error(
-                                    f"Extension '{module_name}' crashed during run: {e}"
-                                )
-                            break
-                    else:
-                        logger.warning(f"No extension class found in {module_name}")
+            try:
+                spec = importlib.util.spec_from_file_location(module_name, filepath)
+                module = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(module)
 
-                except Exception as e:
-                    logger.error(f"Error loading extension {module_name} : {e}")
+                for _, obj in inspect.getmembers(module, inspect.isclass):
+                    if issubclass(obj, Worker) and obj is not Worker:
+                        instance = obj(config=shared_config)
+                        logger.info(f"Starting extension: {module_name}")
+                        try:
+                            threading.Thread(target=instance.run, daemon=True).start()
+                        except Exception as e:
+                            logger.error(
+                                f"Extension '{module_name}' crashed during run: {e}"
+                            )
+                        break
+                else:
+                    logger.warning(f"No extension class found in {module_name}")
+
+            except Exception as e:
+                logger.error(f"Error loading extension {module_name} : {e}")
 
 
 def main():
@@ -80,6 +85,12 @@ def main():
         type=str,
         default="extensions",
         help="Directory containing extensions",
+    )
+    parser.add_argument(
+        "--only",
+        type=str,
+        default=None,
+        help="Comma-separated list of extension names to load (e.g., foo,bar,baz)",
     )
     parser.add_argument(
         "-c", "--config", type=str, default=None, help="Path to configuration YAML file"
@@ -101,6 +112,8 @@ def main():
             logger.error("No config file found (config.yaml or config.yml)")
             return
 
+    only_list = args.only.split(",") if args.only else None
+
     logger.debug(f"Using config file: {config_path}")
 
     try:
@@ -111,7 +124,7 @@ def main():
         return
 
     logger.info(f"Loading extensions from: {args.extensions}")
-    load_extensions(args.extensions, config)
+    load_extensions(args.extensions, config, only=only_list)
     try:
         while True:
             time.sleep(2)
